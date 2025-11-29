@@ -57,6 +57,60 @@ Um script que substitui a interação humana manual para permitir validação em
 
 ---
 
+## 📊 Resultados Preliminares (Validação)
+
+Realizamos uma validação inicial utilizando os primeiros 5 problemas do dataset HumanEval. O objetivo foi verificar a eficácia da lógica de poda (pruning) e a robustez do sistema.
+
+### Métricas de Execução
+- **Total de Problemas**: 5
+- **Candidatos Iniciais**: 30 (6 por problema, incluindo a solução canônica injetada)
+- **Candidatos Mantidos**: 13
+- **Taxa de Redução**: **56.67%**
+
+### Análise
+O sistema demonstrou capacidade de filtrar mais da metade dos candidatos incorretos. A validação confirmou que a **Solução Canônica nunca foi eliminada**, comprovando a segurança da lógica de poda baseada no Oráculo. A maioria das eliminações ocorreu devido a erros de execução (`UNDEFINED`) nos candidatos gerados pelo GPT-3.5, o que é esperado para um modelo desse porte em geração zero-shot.
+
+---
+
+## 📂 Estrutura do Projeto
+
+Abaixo, detalhamos os principais arquivos e suas responsabilidades na arquitetura:
+
+### `src/generate_candidates.py`
+**Função**: Gerador de Cache.
+- Baixa o dataset HumanEval.
+- Utiliza a API da OpenAI para gerar $N$ candidatos de código para cada problema.
+- Salva os resultados em `data/candidates_cache.json`.
+- **Importância**: Isola a etapa de geração (que é cara e lenta) da etapa de teste, permitindo iteração rápida no desenvolvimento do TiCoder.
+
+### `src/main_loop.py`
+**Função**: Orquestrador do Workflow.
+- Carrega os candidatos do cache.
+- Injeta a Solução Canônica (para validação).
+- Coordena a chamada ao SLM para gerar testes.
+- Invoca o Oráculo para obter o gabarito.
+- Executa os testes e aplica a lógica de poda (Pruning).
+- Calcula e exibe as métricas finais.
+
+### `src/core/slm_manager.py`
+**Função**: "Cérebro" do Test Manager.
+- Contém a lógica de Prompt Engineering para o SLM.
+- Recebe a lista de códigos e pede ao modelo um input que diferencie os comportamentos.
+- **Ponto de Evolução**: É aqui que técnicas de In-Context Learning mais avançadas (Chain-of-Thought) devem ser implementadas.
+
+### `src/core/oracle.py`
+**Função**: Fonte da Verdade.
+- Encapsula a execução da Solução Canônica.
+- Garante que temos um "Ground Truth" confiável para comparar os candidatos.
+
+### `src/utils/execution.py`
+**Função**: Executor Seguro.
+- Roda código Python arbitrário em um subprocesso isolado.
+- Captura stdout e erros.
+- Protege o sistema principal de crashes causados por código malicioso ou quebrado (loops infinitos, syntax errors).
+
+---
+
 ## 📚 Referências
 
 [^1]: Artigo original sobre geração de código interativa baseada em testes com LLMs
