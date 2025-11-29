@@ -35,12 +35,22 @@ def main():
         initial_count = len(candidates)
         total_candidates_processed += initial_count
         
-        # 1. Ask SLM for a discriminating test
+        # 1. Ask SLM for discriminating tests (Generate 5)
         # In a real loop, we might do this iteratively. Here we do one pass as per instructions.
-        test_input = generate_discriminating_test(candidates)
-        print(f"  SLM Generated Test Input: {test_input}")
+        from core.ranking import rank_tests_by_simple_distinguishing_power
         
-        # 2. Get Ground Truth from Oracle
+        generated_tests = generate_discriminating_test(candidates, n=5)
+        print(f"  SLM Generated {len(generated_tests)} Tests: {generated_tests}")
+        
+        # 2. Rank Tests and Select Best
+        ranked_tests = rank_tests_by_simple_distinguishing_power(generated_tests, candidates)
+        best_test_input, score = ranked_tests[0]
+        print(f"  Ranking Results: {ranked_tests}")
+        print(f"  Selected Best Test: {best_test_input} (Score: {score:.2f})")
+        
+        test_input = best_test_input
+        
+        # 3. Get Ground Truth from Oracle
         oracle = Oracle(canonical_solution)
         expected_output = oracle.evaluate(test_input)
         print(f"  Oracle Expected Output: {expected_output}")

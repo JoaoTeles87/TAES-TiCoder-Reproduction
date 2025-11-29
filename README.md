@@ -44,8 +44,9 @@ Responsável por fornecer o espaço de busca inicial.
 O núcleo inteligente do sistema que substitui o ranqueamento estatístico original.
 
 - **Motor**: Um modelo SLM (Small Language Model) otimizado.
-- **Lógica**: Recebe os códigos candidatos e, através de um prompt few-shot, raciocina sobre as diferenças semânticas entre eles.
-- **Saída**: Gera um único teste discriminativo (Input) projetado especificamente para expor falhas nos candidatos incorretos, sem a necessidade de gerar múltiplos testes descartáveis[^7].
+- **Lógica**: Recebe os códigos candidatos e gera **5 opções de testes distintos**.
+- **Ranking**: Utiliza a estratégia **Simple Distinguishing** (adaptada) para selecionar o teste que melhor divide os candidatos (maximiza a discordância entre eles).
+- **Saída**: O teste melhor ranqueado é enviado para o Oráculo.
 
 ### 3. Simulated User (Oráculo Automatizado)
 

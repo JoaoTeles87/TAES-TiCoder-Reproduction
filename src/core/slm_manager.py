@@ -11,17 +11,18 @@ load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key) if api_key else None
 
-def generate_discriminating_test(candidates_list: list) -> str:
+
+def generate_discriminating_test(candidates_list: list, n: int = 5) -> list:
     """
     Uses an SLM (Small Language Model) to generate a test case that discriminates
     between the provided candidate solutions.
     """
     if not candidates_list:
-        return "0"
+        return ["0"]
 
     if not client:
-        print("Warning: OpenAI API key not found. Returning mock input.")
-        return "0"
+        print("Warning: OpenAI API key not found. Returning mock inputs.")
+        return ["0", "1", "-1"]
 
     # Construct prompt
     # We want the model to see the candidates and generate an input.
@@ -36,14 +37,17 @@ def generate_discriminating_test(candidates_list: list) -> str:
 You are a software testing expert.
 Here are {len(candidates_list)} Python function implementations for the same problem.
 Some might be correct, some might be buggy.
-
 {candidates_text}
+Your task is to generate {n} DISTINCT test inputs (arguments only) that would likely produce DIFFERENT outputs for these candidates, helping to distinguish the correct one from the buggy ones.
 
-Your task is to generate a SINGLE test input (arguments only) that would likely produce DIFFERENT outputs for these candidates, helping to distinguish the correct one from the buggy ones.
-The input should be valid for the function signature.
-Return ONLY the input arguments as a string. Do not include function name.
-Example: if function is `def add(a, b)`, return `1, 2`.
-Example: if function is `def reverse(s)`, return `"hello"`.
+IMPORTANT:
+- Return the inputs as a JSON list of strings.
+- If the input is a STRING, it must be QUOTED inside the JSON string.
+  - Example for integer input: "1, 2"
+  - Example for string input: "'hello'" (Note the single quotes inside)
+  - Example for list input: "[1, 2, 3]"
+
+Return ONLY the JSON list.
 """
 
     try:
@@ -55,12 +59,22 @@ Example: if function is `def reverse(s)`, return `"hello"`.
             temperature=0.7
         )
         
-        test_input = completion.choices[0].message.content.strip()
-        # Clean up if the model adds quotes around the whole thing or code blocks
-        test_input = test_input.replace("`", "").strip()
-        return test_input
+        content = completion.choices[0].message.content.strip()
+        # Clean potential markdown
+        content = content.replace("```json", "").replace("```", "").strip()
+        
+        import json
+        try:
+            test_inputs = json.loads(content)
+            if isinstance(test_inputs, list):
+                return [str(x) for x in test_inputs]
+            else:
+                return [str(content)]
+        except json.JSONDecodeError:
+            # Fallback if model didn't return valid JSON
+            print(f"Warning: SLM returned invalid JSON: {content}")
+            return [content]
         
     except Exception as e:
         print(f"Error generating test input: {e}")
-        return "0"
-
+        return ["0"]
