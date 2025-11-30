@@ -1,5 +1,6 @@
 import json
 import re
+import random
 import sys
 sys.path.insert(0, '../src')
 
@@ -103,6 +104,31 @@ class DataParser:
         else:
             with open(file_path, "r") as f:
                 return json.load(f)
+    
+    @staticmethod
+    def preload_random_samples(file_path, n, seed=None):
+        """
+        Carrega dataset e retorna N amostras aleatórias de forma determinística por seed.
+        
+        Args:
+            file_path (str): Caminho para arquivo .json ou .jsonl
+            n (int): Número de amostras a retornar. Se n >= tamanho do dataset, retorna tudo.
+            seed (int ou None): Seed para amostragem determinística. Recomenda-se usar int.
+        
+        Returns:
+            tuple: (samples_list, indices_list) onde samples_list é a lista de itens selecionados
+                   e indices_list são os índices inteiros (no dataset original) escolhidos.
+        """
+        data = DataParser.read_json_or_jsonl_to_list(file_path)
+        total = len(data)
+        if n >= total:
+            return data, list(range(total))
+        
+        rng = random.Random(seed)
+        # Amostragem de índices sem reposição de forma determinística para o seed dado
+        indices = rng.sample(range(total), n)
+        samples = [data[i] for i in indices]
+        return samples, indices
     
     @staticmethod
     def parse_func_code(data):
