@@ -17,6 +17,7 @@ from config import debug_print
 class TimeoutException(Exception):
     pass
 
+
 def timeout_handler(signum, frame):
     raise TimeoutException
 
@@ -44,7 +45,8 @@ def execute_code(code, test, func_name=None):
         signal.alarm(timeout)
         faulthandler.enable()
         with redirect_stdout(StringIO()):
-            RuntimeModule.from_string(f"tmp_sol_{time.time_ns()}_{random()}", sol)
+            RuntimeModule.from_string(
+                f"tmp_sol_{time.time_ns()}_{random()}", sol)
     except Exception as e:
         signal.alarm(0)
         debug_print(f"error = {e}")
@@ -59,11 +61,14 @@ class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
         self.seconds = seconds
         self.error_message = error_message
+
     def handle_timeout(self, signum, frame):
         raise TimeoutError(self.error_message)
+
     def __enter__(self):
         signal.signal(signal.SIGALRM, self.handle_timeout)
         signal.alarm(self.seconds)
+
     def __exit__(self, type, value, traceback):
         signal.alarm(0)
 
@@ -76,7 +81,7 @@ def test_code(test, code, func_name=None):
 
     with timeout(seconds=1):
         try:
-           
+
             res = execute_code(code, test, func_name)
             debug_print("Tests passed")
             if res == "PASSED":
@@ -100,7 +105,7 @@ def test_code(test, code, func_name=None):
         except:
             info = sys.exc_info()[0]
             descr = sys.exc_info()[1]
-            debug_print (f"Unexpected exception while execution {info} {descr}")
+            debug_print(f"Unexpected exception while execution {info} {descr}")
             return (False, None)
 
 

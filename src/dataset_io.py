@@ -1,5 +1,6 @@
 import json
 import re
+import random
 
 import config
 from config import debug_print
@@ -25,7 +26,8 @@ def read_json_or_jsonl_to_list(file_path):
 def parse_func_code(data):
     """Extract func name and signature from code"""
     # find all def statements and arguments
-    def_stmts = re.findall(r".*def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", data["code"])
+    def_stmts = re.findall(
+        r".*def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", data["code"])
     def_stmts = dict.fromkeys(def_stmts)
     num = len(def_stmts)
     func_name = None
@@ -43,7 +45,8 @@ def parse_func_code(data):
     else:
         func_name = def_stmts[num - 1]
 
-    args = re.findall(r".*def\s+" + func_name + r"(\s*\(.*\)\s*):", data["code"])
+    args = re.findall(r".*def\s+" + func_name +
+                      r"(\s*\(.*\)\s*):", data["code"])
     func_sig = args[0] if len(args) > 0 else ""
     return func_name, func_sig
 
@@ -82,12 +85,14 @@ def parse_mbpp_data(data):
     debug_print(f'"""{func_docstring}"""')
     assert len(data["code"].split("def " + func_name + func_sig + ":")) > 1
 
-    prog_data["ctxt"] = data["code"].split("def " + func_name + func_sig + ":")[0]
+    prog_data["ctxt"] = data["code"].split(
+        "def " + func_name + func_sig + ":")[0]
     prog_data["sig"] = (
         "def " + func_name + func_sig + ':\n\t"""' + func_docstring + '"""'
     )
     prog_data["func_name"] = func_name
-    prog_data["val_tests"] = create_validation_tests(data["test_list"], func_name)
+    prog_data["val_tests"] = create_validation_tests(
+        data["test_list"], func_name)
     prog_data["oracle"] = oracle
     return prog_data
 
@@ -99,11 +104,39 @@ def parse_sanitized_mbpp_data(data):
     debug_print(f'"""{func_docstring}"""')
     assert len(data["code"].split("def " + func_name + func_sig + ":")) > 1
 
-    prog_data["ctxt"] = data["code"].split("def " + func_name + func_sig + ":")[0]
+    prog_data["ctxt"] = data["code"].split(
+        "def " + func_name + func_sig + ":")[0]
     prog_data["sig"] = (
         "def " + func_name + func_sig + ':\n\t"""' + func_docstring + '"""'
     )
     prog_data["func_name"] = func_name
-    prog_data["val_tests"] = create_validation_tests(data["test_list"], func_name)
+    prog_data["val_tests"] = create_validation_tests(
+        data["test_list"], func_name)
     prog_data["oracle"] = oracle
     return prog_data
+
+
+def preload_random_samples(file_path, n, seed=None):
+    """Load dataset (JSON or JSONL) and return N random samples deterministic by seed.
+
+    Args:
+        file_path (str): path to a .json or .jsonl dataset file.
+        n (int): number of samples to return. If n >= dataset size, returns whole dataset.
+        seed (int or None): seed for deterministic sampling. If None, sampling is still deterministic
+            across runs if the same seed (None uses Random(None) behavior which is not stable),
+            so it is recommended to pass an integer seed.
+
+    Returns:
+        tuple: (samples_list, indices_list) where samples_list is a list of selected items
+               and indices_list are the integer indices (in the original dataset) chosen.
+    """
+    data = read_json_or_jsonl_to_list(file_path)
+    total = len(data)
+    if n >= total:
+        return data, list(range(total))
+
+    rng = random.Random(seed)
+    # sample indices without replacement in a deterministic way for given seed
+    indices = rng.sample(range(total), n)
+    samples = [data[i] for i in indices]
+    return samples, indices
