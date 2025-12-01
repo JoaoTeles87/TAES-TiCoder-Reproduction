@@ -40,9 +40,33 @@ Currently, we have tested the setup on Linux Ubuntu machine. Support for Windows
 
 4. **Install dependencies**:
    ```bash
-   cd src
    pip install -r requirements.txt
    ```
+
+---
+
+## Automated Reproduction
+
+We provide a streamlined script to reproduce the experiments on Windows/Linux. This script handles cache generation, the main TiCoder loop, and results analysis in one go.
+
+### Running the Experiment
+
+To run a full experiment on a subset of the MBPP dataset (e.g., 10 examples):
+
+```bash
+python reproduction/run_full_experiment.py --limit 10 --output_tag demo --model gpt-3.5-turbo
+```
+
+**Arguments:**
+- `--limit`: Number of examples to process (approximate).
+- `--output_tag`: Tag for the output files (e.g., `demo` -> `global_results.demo.json`).
+- `--model`: OpenAI model to use (default: `gpt-3.5-turbo`).
+- `--skip_gen`: Skip the cache generation step if you already have it.
+
+### Viewing Results
+
+The results will be saved in `results/global_results.<tag>.json`.
+For a detailed report of our reproduction experiments, see [EXPERIMENT_REPORT.md](reproduction/EXPERIMENT_REPORT.md).
 
 ---
 

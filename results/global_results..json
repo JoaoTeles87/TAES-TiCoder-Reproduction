@@ -1,0 +1,23 @@
+[
+    {
+        "func_name": "chunk_tuples",
+        "index": 0,
+        "num_code_suggestions": 2,
+        "results": [
+            {
+                "num_tests": 5,
+                "num_queries": 1,
+                "num_pos_tests": 1,
+                "num_neg_tests": 0,
+                "status": [
+                    true,
+                    true
+                ],
+                "weights": [
+                    2,
+                    3
+                ]
+            }
+        ]
+    }
+]
