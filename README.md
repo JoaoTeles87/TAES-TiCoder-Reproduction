@@ -103,28 +103,6 @@ To view intermediate results, use `--verbosity 1`.
 
 ### Simulating a User
 If you want to simulate a user’s responses automatically, include `--query_oracle` to indicate you’re simulating user feedback by querying the “oracle” (the ground truth). Remove this flag to get actual user feedback.
-
----
-
-## Benchmarking
-
-### Running TiCODER on MBPP
-For example, run on 10 random MBPP examples while querying the reference oracle (simulated user). For each example, 5 code suggestions are generated, and 10 tests are generated per code suggestion:
-```bash
-python3 main.py \
-  --data_file_path ../datasets/mbpp/mbpp.jsonl \
-  --query_oracle \
-  --max_code_suggestions 5 \
-  --max_num_examples 10 \
-  --fix_num_tests 10 \
-  --output_tag <foo>
-```
-This produces a file `global_results<foo>.json` which logs all results. To run on the full MBPP dataset, drop the `--max_num_examples` flag.
-
-### Gathering Metrics
-Use the following to gather metrics from `results/global_results<foo>.json`:
-```bash
-python3 analyze_data.py results/global_results<foo>.json
 ```
 This will return a summary of the results, including the pass@k values at each simulated user interaction. 
 

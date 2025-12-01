@@ -7,6 +7,9 @@ import sys
 import traceback
 from multiprocessing import cpu_count
 from tqdm import tqdm
+from dotenv import load_dotenv
+load_dotenv()
+
 import query_chat_model
 from pebble import ProcessExpired, ProcessPool
 import model_setup
@@ -21,12 +24,13 @@ import user_interaction as ui
 from config import debug_print
 
 # Extra global variables
-total_tests = 0
-valid_tests = 0
 valid_test_exists_for_program = 0
+valid_tests = 0
 total_pruned_tests = 0
 valid_pruned_tests = 0
 valid_pruned_test_exists_for_program = 0
+total_tests = 0
+total_pruned_tests, valid_pruned_tests, valid_pruned_test_exists_for_program = 0, 0, 0
 qm = None
 counter = None
 

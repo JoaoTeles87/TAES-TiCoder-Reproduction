@@ -1,0 +1,13 @@
+name: ticoder-slm
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - openai
+    - python-dotenv
+    - tiktoken
+    - numpy
+    - pebble
+    - astunparse

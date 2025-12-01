@@ -4,6 +4,11 @@ import time
 import openai
 import threading
 import tiktoken
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')) # Try loading from root if in src
 
 
 class TokenCounter:

@@ -7,7 +7,8 @@ from contextlib import redirect_stdout
 from io import StringIO
 from random import random
 
-from pyext import RuntimeModule
+# from pyext import RuntimeModule
+import types
 
 import config
 from config import debug_print
@@ -18,17 +19,12 @@ class TimeoutException(Exception):
     pass
 
 
-def timeout_handler(signum, frame):
-    raise TimeoutException
-
+import threading
 
 def execute_code(code, test, func_name=None):
     # invariant: only one test must be executed
     # assert isinstance(test, (list, tuple)) and len(test) == 1
     # only one test from now on
-
-    signal.signal(signal.SIGALRM, timeout_handler)
-    timeout = 1  # seconds
 
     sol = "import sys\nimport time\nimport itertools\nfrom itertools import accumulate, product, permutations, combinations\nimport collections\nfrom collections import Counter, OrderedDict, deque, defaultdict, ChainMap\nfrom functools import lru_cache\nimport math\nfrom math import sqrt, sin, cos, tan, ceil, fabs, floor, gcd, exp, log, log2\nimport fractions\nfrom typing import List, Tuple\nimport numpy as np\nimport random\nimport heapq\nfrom heapq import *\n"
     sol += code
@@ -40,19 +36,51 @@ def execute_code(code, test, func_name=None):
     else:
         sol += "\n"
         sol += f"{config.TEST_PREFIX + func_name}()"
-    try:
-        debug_print(f"Executing {sol}")
-        signal.alarm(timeout)
-        faulthandler.enable()
-        with redirect_stdout(StringIO()):
-            RuntimeModule.from_string(
-                f"tmp_sol_{time.time_ns()}_{random()}", sol)
-    except Exception as e:
-        signal.alarm(0)
-        debug_print(f"error = {e}")
-        raise e
 
-    signal.alarm(0)
+    # Container to capture exception from thread
+    exc_container = []
+
+    def run_exec():
+        try:
+            debug_print(f"Executing {sol}")
+            faulthandler.enable()
+            with redirect_stdout(StringIO()):
+                module = types.ModuleType(f"tmp_sol_{time.time_ns()}_{random()}")
+                exec(sol, module.__dict__)
+        except Exception as e:
+            exc_container.append(e)
+
+    if sys.platform == 'win32':
+        # Windows: Use threading
+        t = threading.Thread(target=run_exec)
+        t.start()
+        t.join(1) # 1 second timeout
+        if t.is_alive():
+            debug_print("Timeout reached (Windows threading)")
+            # We cannot easily kill the thread in Python without ctypes/hacks, 
+            # but we can stop waiting and raise TimeoutException.
+            # The thread will continue in background unfortunately.
+            raise TimeoutException
+        
+        # Check for exceptions
+        if exc_container:
+            debug_print(f"error = {exc_container[0]}")
+            raise exc_container[0]
+
+    else:
+        # Unix: Use signals
+        def timeout_handler(signum, frame):
+            raise TimeoutException
+        
+        signal.signal(signal.SIGALRM, timeout_handler)
+        try:
+            signal.alarm(1)
+            run_exec()
+            if exc_container:
+                 raise exc_container[0]
+        finally:
+            signal.alarm(0)
+
     debug_print("PASS")
     return "PASSED"
 
@@ -66,11 +94,13 @@ class timeout:
         raise TimeoutError(self.error_message)
 
     def __enter__(self):
-        signal.signal(signal.SIGALRM, self.handle_timeout)
-        signal.alarm(self.seconds)
+        if sys.platform != 'win32':
+            signal.signal(signal.SIGALRM, self.handle_timeout)
+            signal.alarm(self.seconds)
 
     def __exit__(self, type, value, traceback):
-        signal.alarm(0)
+        if sys.platform != 'win32':
+            signal.alarm(0)
 
 
 def test_code(test, code, func_name=None):
