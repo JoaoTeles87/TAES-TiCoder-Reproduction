@@ -20,7 +20,7 @@ class ProgramData:
         oracle (str): Código correto da função (implementação de referência)
     """
     
-    def __init__(self, ctxt="", sig="", func_name="", val_tests=None, oracle=""):
+    def __init__(self, ctxt="", sig="", func_name="", val_tests=None, oracle="", original_prompt=""):
         """
         Inicializa um objeto ProgramData.
         
@@ -30,12 +30,14 @@ class ProgramData:
             func_name (str): Nome da função. Padrão: ""
             val_tests (list): Testes de validação. Padrão: None
             oracle (str): Implementação correta. Padrão: ""
+            original_prompt (str): Prompt original do dataset. Padrão: ""
         """
         self.ctxt = ctxt
         self.sig = sig
         self.func_name = func_name
         self.val_tests = val_tests if val_tests is not None else []
         self.oracle = oracle
+        self.original_prompt = original_prompt
     
     def to_dict(self):
         """
@@ -285,5 +287,6 @@ class DataParser:
             sig=sig,
             func_name=func_name,
             val_tests=val_tests,
-            oracle=oracle
+            oracle=oracle,
+            original_prompt=func_docstring
         )

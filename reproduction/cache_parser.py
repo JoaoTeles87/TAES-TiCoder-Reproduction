@@ -269,24 +269,10 @@ class CacheParser:
         record = self._build_codet_record(choices, prompt)
         Path(output_file).parent.mkdir(parents=True, exist_ok=True)
 
-        existing: List[Dict[str, Any]] = []
-        if Path(output_file).exists():
-            try:
-                with open(output_file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                if isinstance(data, list):
-                    existing = data
-                elif isinstance(data, dict):
-                    existing = [data]
-            except Exception:
-                existing = []
-
-        existing.append(record)
-
         with open(output_file, "a", encoding="utf-8") as f:
-            f.write(json.dumps(existing, ensure_ascii=False) + "\n")
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
-        print(f"Respostas CodeT adicionadas em {output_file} ({len(existing)} entradas")
+        print(f"Resposta CodeT adicionada em {output_file}")
 
     def save_codet_json(self, choices: List[Any], prompt: Any, output_file: str):
         """Salva choices no formato CodeT (prompt + samples) em JSON."""

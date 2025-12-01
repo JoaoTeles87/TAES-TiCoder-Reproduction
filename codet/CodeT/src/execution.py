@@ -2,7 +2,10 @@
 # Licensed under the MIT license.
 
 import ctypes
-libgcc_s = ctypes.CDLL('libgcc_s.so.1')
+try:
+    libgcc_s = ctypes.CDLL('libgcc_s.so.1')
+except OSError:
+    pass
 
 from collections import defaultdict
 from concurrent.futures import as_completed, ProcessPoolExecutor
