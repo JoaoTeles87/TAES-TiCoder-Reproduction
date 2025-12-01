@@ -5,6 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 import models
+import cache_parser
 from data_parser import ProgramData, DataParser
 import config
 
@@ -77,15 +78,14 @@ prog_data: ProgramData = DataParser.parse_sanitized_mbpp_data(data[0])
 if __name__ == "__main__":
 
     model = models.GPT5Nano()
-
+    cache = cache_parser.CacheParser()
 
     # json e jsonl de acordo com como o TiCoder e  o CodeT querem a cache. (olhar repo do CodeT)
-    
     
     try:
         choices = model.create_completion(
             messages=test_prompt(prog_data),
-            n = 2,
+            n = 3,
             max_tokens=4000,
             reasoning_effort="low"
         )
@@ -93,5 +93,14 @@ if __name__ == "__main__":
         for i, choice in enumerate(choices):
             print("=" * 30, f"Generated Code {i+1}", "=" * 30 + "\n\n")
             print(choice.message.content, end = "\n\n")
+
+        cache.add_response(choices)
+        cache.append_to_json("mika.json")
+        cache.append_to_jsonl("mika.jsonl")
+        # cache.to_json("mika.json") #cria o json e caso exista, limpa todo o json e adiciona os dados
+        # cache.to_jsonl("mika.jsonl") #cria o jsonl e caso exista, limpa todo o json e adiciona os dados
+
     except Exception as e:
         print(f"Error: {e}")
+
+
