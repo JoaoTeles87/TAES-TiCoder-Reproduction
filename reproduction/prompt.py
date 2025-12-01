@@ -59,7 +59,8 @@ def test_prompt(program_data: ProgramData) -> list[dict]:
     f"Generate a test code for the function containing assersions. \n" +
     f"Start the test code with: \n\ndef {config.TEST_PREFIX}{program_data.func_name}():\n\tassert {program_data.func_name} (\n\n\n" +
     f"Do not explain the test code, just generate it. Do not call the test code.\n" +
-    f"Do not write any standalone asserts.\n" +
+    "Do not surround the code with any markdown formatting.\n" +
+    "Do not write any standalone asserts.\n" +
     "The test code should contain only one assertion for the function. \n")
 
     prompt.append(
