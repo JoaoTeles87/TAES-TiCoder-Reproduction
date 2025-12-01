@@ -5,6 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 import models
+import cache_parser
 from data_parser import ProgramData, DataParser
 import config
 
@@ -75,18 +76,26 @@ mbpp_sanitized_file = os.path.join(os.path.dirname(__file__), "../datasets/mbpp/
 data = DataParser.read_json_or_jsonl_to_list(mbpp_sanitized_file)[:1]
 prog_data: ProgramData = DataParser.parse_sanitized_mbpp_data(data[0])
 
+def _get_user_prompt_content(messages: list[dict]) -> str:
+    """Extrai o conteudo do prompt do usuario para exportar no formato CodeT."""
+    for message in messages:
+        if isinstance(message, dict) and message.get("role") == "user":
+            return str(message.get("content", ""))
+    return ""
+
 if __name__ == "__main__":
 
     model = models.GPT5Nano()
-
+    cache = cache_parser.CacheParser()
 
     # json e jsonl de acordo com como o TiCoder e  o CodeT querem a cache. (olhar repo do CodeT)
     
-    
     try:
+        messages = test_prompt(prog_data)
+        codet_prompt = _get_user_prompt_content(messages)
         choices = model.create_completion(
-            messages=test_prompt(prog_data),
-            n = 2,
+            messages=messages,
+            n = 3,
             max_tokens=4000,
             reasoning_effort="low"
         )
@@ -94,5 +103,11 @@ if __name__ == "__main__":
         for i, choice in enumerate(choices):
             print("=" * 30, f"Generated Code {i+1}", "=" * 30 + "\n\n")
             print(choice.message.content, end = "\n\n")
+
+        cache.save_codet_json(choices, codet_prompt, "codet_cache.json")
+        cache.save_codet_jsonl(choices, codet_prompt, "codet_cache.jsonl")
+
     except Exception as e:
         print(f"Error: {e}")
+
+    print("hello word")
