@@ -1,1 +1,8 @@
 .env
+*.pyc
+
+# Large dataset files
+codet/CodeT/data/dataset/*.zip
+codet/CodeT/data/generated_data/*.zip
+codet/RepoCoder/datasets/*.zip
+codet/RepoCoder/repositories/*.zip
