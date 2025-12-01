@@ -94,7 +94,7 @@ if __name__ == "__main__":
         codet_prompt = _get_user_prompt_content(messages)
         choices = model.create_completion(
             messages=messages,
-            n = 3,
+            n = 8,
             max_tokens=4000,
             reasoning_effort="low"
         )

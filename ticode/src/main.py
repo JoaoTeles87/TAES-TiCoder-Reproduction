@@ -29,6 +29,13 @@ valid_pruned_tests = 0
 valid_pruned_test_exists_for_program = 0
 qm = None
 counter = None
+args = None
+update_codex_cache_file = False
+num_threads = 1
+get_pruned_stats_in_global = False
+data_list = []
+output_tag = ""
+client = None
 
 def prune_code_using_testgen(prog_data, code_suggestions, num_tests):
     global total_tests, valid_tests, valid_test_exists_for_program, qm
@@ -274,6 +281,58 @@ def parse_command_line_args():
         client = oai_client()
     return args
 
+def process_data_sample(tup):
+    global qm, counter, update_codex_cache_file, args, data_list, client
+    if counter is None:
+        counter = config.TokenCounter(config.token_per_minute_limit)
+    i, data = tup
+    try:
+        numtests = args.fix_num_tests
+        if args.pass_at_one:
+            numtests = 0
+        #randomly select the example with probability 1/max_num_examples
+        if random.random() > args.max_num_examples/len(data_list):
+            debug_print(f"Skipping example {i} due to random sample")
+            return
+
+        if "HumanEval" in args.data_file_path:
+            prog_data = dio.parse_human_eval_data(data)
+        elif "sanitized-mbpp" in args.data_file_path:
+            prog_data = dio.parse_sanitized_mbpp_data(data)
+        else:
+            prog_data = dio.parse_mbpp_data(data)
+        debug_print(f"Validations tests: {prog_data['val_tests'][0]}")
+        # check if data has function name
+        if args.function_name != '' and prog_data['func_name'] != args.function_name:
+            debug_print(f"Skipping example {i} due to function name not matched")
+            return
+        # get the common code suggestions
+        tests_in_ctxt = prog_data['val_tests'] if config.use_validation_tests_in_context else None
+        print('*' * 40  + 'Code Generation' + '*' * 40)
+        orig_codes, codes = qm.gen_and_prune_codes(client, prog_data, tests_in_ctxt, token_counter=counter)
+        print('*' * 40  + 'End Code Generation' + '*' * 40)
+
+        # store the results for each example with different number of test steps
+        # create a json object with example, num_code_suggestions, and status vector for each test step
+        results = []
+        tappy_entry_func(prog_data, orig_codes, codes, results, numtests)
+
+        record_i = {
+            'func_name': prog_data['func_name'],
+            'index': i,
+            'num_code_suggestions': len(codes),
+            'results': results
+        }
+        # global_results.append(record_i)
+        debug_print(f"Record[i] ==> {record_i}")
+        if update_codex_cache_file:
+            assert config.codex_cache_file is not None
+            with open(config.codex_cache_file, 'w') as f:
+                json.dump(config.codex_query_response_log, f)
+        return record_i
+    except KeyboardInterrupt as key_err:
+        print (f"Exit due to {key_err}")
+        raise key_err
 
 if __name__ == "__main__":
     args = parse_command_line_args()
@@ -352,60 +411,6 @@ if __name__ == "__main__":
             config.codex_query_response_log = {}
     config.verbosity = args.verbosity
     global_results = []
-
-    def process_data_sample(tup):
-        global qm, counter, update_codex_cache_file
-        if counter is None:
-            counter = config.TokenCounter(config.token_per_minute_limit)
-        i, data = tup
-        try:
-            numtests = args.fix_num_tests
-            if args.pass_at_one:
-                numtests = 0
-            #randomly select the example with probability 1/max_num_examples
-            if random.random() > args.max_num_examples/len(data_list):
-                debug_print(f"Skipping example {i} due to random sample")
-                return
-
-            if "HumanEval" in args.data_file_path:
-                prog_data = dio.parse_human_eval_data(data)
-            elif "sanitized-mbpp" in args.data_file_path:
-                prog_data = dio.parse_sanitized_mbpp_data(data)
-            else:
-                prog_data = dio.parse_mbpp_data(data)
-            debug_print(f"Validations tests: {prog_data['val_tests'][0]}")
-            # check if data has function name
-            if args.function_name != '' and prog_data['func_name'] != args.function_name:
-                debug_print(f"Skipping example {i} due to function name not matched")
-                return
-            # get the common code suggestions
-            tests_in_ctxt = prog_data['val_tests'] if config.use_validation_tests_in_context else None
-            print('*' * 40  + 'Code Generation' + '*' * 40)
-            orig_codes, codes = qm.gen_and_prune_codes(client, prog_data, tests_in_ctxt, token_counter=counter)
-            print('*' * 40  + 'End Code Generation' + '*' * 40)
-
-            # store the results for each example with different number of test steps
-            # create a json object with example, num_code_suggestions, and status vector for each test step
-            results = []
-            tappy_entry_func(prog_data, orig_codes, codes, results, numtests)
-
-            record_i = {
-                'func_name': prog_data['func_name'],
-                'index': i,
-                'num_code_suggestions': len(codes),
-                'results': results
-            }
-            # global_results.append(record_i)
-            debug_print(f"Record[i] ==> {record_i}")
-            if update_codex_cache_file:
-                assert config.codex_cache_file is not None
-                with open(config.codex_cache_file, 'w') as f:
-                    json.dump(config.codex_query_response_log, f)
-            return record_i
-        except KeyboardInterrupt as key_err:
-            print (f"Exit due to {key_err}")
-            raise key_err
-        
 
     data_process_args = [ (i, data) for i, data in enumerate(data_list) if i >= args.min_indx and i <= args.max_indx ]
     if num_threads != 1:

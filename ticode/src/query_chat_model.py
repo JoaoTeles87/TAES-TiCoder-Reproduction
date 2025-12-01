@@ -316,6 +316,17 @@ def get_or_create_codex_response(client, prompt_val, best_of_val, temp_val, echo
     if config.codex_cache_file is not None and str(k) in config.codex_query_response_log:
         config.skip_codex_query_cnt = config.skip_codex_query_cnt + 1
         resp = config.codex_query_response_log[str(k)][1]
+        
+        # Fix: Reconstruct ChatCompletion object from dict if needed
+        if isinstance(resp, dict):
+            try:
+                from openai.types.chat import ChatCompletion
+                resp = ChatCompletion(**resp)
+            except Exception as e:
+                print(f"Warning: Failed to reconstruct ChatCompletion from cache: {e}")
+                # Fallback: keep as dict and hope downstream code handles it or fails gracefully
+                pass
+                
         debug_print(f"Cached response for {k} is {resp}")
         return resp
     assert best_of_val <= max_suggestions
@@ -367,6 +378,14 @@ def get_or_create_codex_response(client, prompt_val, best_of_val, temp_val, echo
         print("Current Tokens:, ", query_response.usage.total_tokens, "\tUsed tokens: ",
             token_counter.used_tokens, "\tToken limit: ", token_counter.token_limit,
             "\tSo far generated: ", len(response.choices))
-    v = (k, response, current_time)
+    
+    # Fix: Convert ChatCompletion object to dict for serialization
+    response_to_store = response
+    if hasattr(response, 'to_dict'):
+        response_to_store = response.to_dict()
+    elif hasattr(response, 'dict'):
+        response_to_store = response.dict()
+        
+    v = (k, response_to_store, current_time)
     config.codex_query_response_log[str(k)] = v
     return response

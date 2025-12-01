@@ -18,6 +18,8 @@ class Model:
 		"""
 		# extrair valores com prioridade: explicit max_tokens ou max_completion_tokens
 		max_tokens = kwargs.pop("max_tokens", kwargs.pop("max_completion_tokens", 512))
+        
+		print(f"DEBUG: Calling OpenAI with model={self.model_name}, max_completion_tokens={max_tokens}, kwargs={kwargs.keys()}")
 
 		# mapear para o nome esperado pelo SDK usado historicamente no projeto
 		response = self.client.chat.completions.create(
@@ -40,6 +42,11 @@ class GPT5Nano(Model):
 		"""
 		# garantir que temperature não seja passado
 		kwargs.pop("temperature", None)
+		
+		# Set default reasoning_effort to 'low' (minimal) if not provided
+		# User requested "none" or "minimal". "low" is the standard minimal value for o1.
+		if "reasoning_effort" not in kwargs:
+			kwargs["reasoning_effort"] = "minimal"
 
 		# repassar demais kwargs ao comportamento genérico
 		return super().create_completion(**kwargs)
