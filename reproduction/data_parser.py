@@ -2,7 +2,7 @@ import json
 import re
 import random
 import sys
-sys.path.insert(0, '../src')
+sys.path.insert(0, '../ticode/src')
 
 import config
 from config import debug_print

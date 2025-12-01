@@ -4,7 +4,7 @@ import time
 from io import StringIO
 from contextlib import redirect_stdout
 
-# Constants matching src/config.py
+# Constants matching ticode/src/config.py
 TEST_PREFIX = 'test_'
 
 def unsafe_execute(code, test, func_name, result_queue):
@@ -18,7 +18,7 @@ def unsafe_execute(code, test, func_name, result_queue):
         # Capture stdout to avoid cluttering the console
         with redirect_stdout(StringIO()):
             # Execute the test
-            # Based on src/execution.py logic:
+            # Based on ticode/src/execution.py logic:
             # sol = imports + code + "\n" + test
             # And then appends the function call:
             # sol += f"{config.TEST_PREFIX + func_name}()"
