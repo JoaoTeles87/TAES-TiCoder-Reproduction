@@ -22,7 +22,7 @@ from data_parser import DataParser
 api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key) if api_key else None
 
-def generate_and_cache(dataset_path: str, output_path: str, limit: int = None, model: str = "gpt-3.5-turbo"):
+def generate_and_cache(dataset_path: str, output_path: str, limit: int = None, model: str = "gpt-3.5-turbo", max_tokens: int = 150):
     if not client:
         print("Error: OPENAI_API_KEY not found in environment.")
         return
@@ -35,7 +35,7 @@ def generate_and_cache(dataset_path: str, output_path: str, limit: int = None, m
     # If limit is None, it loads all.
     samples, indices = DataParser.preload_random_samples(dataset_path, n=limit if limit else 999999)
     
-    print(f"Generating candidates for {len(samples)} problems using {model}...")
+    print(f"Generating candidates for {len(samples)} problems using {model} (max_tokens={max_tokens})...")
     
     for i, sample in enumerate(samples):
         # Parse to get prompt
@@ -56,7 +56,8 @@ def generate_and_cache(dataset_path: str, output_path: str, limit: int = None, m
                     {"role": "user", "content": prompt_text}
                 ],
                 n=5,
-                temperature=0.8
+                temperature=0.8,
+                max_tokens=max_tokens # Use the limit for generation too
             )
             
             # Add to cache
@@ -69,7 +70,7 @@ def generate_and_cache(dataset_path: str, output_path: str, limit: int = None, m
                 prompt=prompt_text,
                 model=model,
                 temperature=0.8,
-                max_tokens=completion.usage.completion_tokens if completion.usage else 0
+                max_tokens=max_tokens # Use the fixed limit for the key, NOT actual usage
             )
             
         except Exception as e:
@@ -86,7 +87,8 @@ if __name__ == "__main__":
     parser.add_argument("--output", required=True, help="Path to output JSON cache")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of problems")
     parser.add_argument("--model", default="gpt-3.5-turbo", help="OpenAI model to use")
+    parser.add_argument("--max_tokens", type=int, default=150, help="Max tokens for generation and cache key")
     
     args = parser.parse_args()
     
-    generate_and_cache(args.dataset, args.output, args.limit, args.model)
+    generate_and_cache(args.dataset, args.output, args.limit, args.model, args.max_tokens)

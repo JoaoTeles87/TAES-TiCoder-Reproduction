@@ -28,13 +28,14 @@ def main():
     parser.add_argument("--model", default="gpt-3.5-turbo", help="Model to use (default: gpt-3.5-turbo)")
     parser.add_argument("--tests", type=int, default=5, help="Number of tests to generate per problem")
     parser.add_argument("--ranking", default=None, help="Ranking strategy (e.g., code_t)")
+    parser.add_argument("--max_tokens", type=int, default=150, help="Max tokens for generation (must match between cache and main)")
     
     args = parser.parse_args()
     
     # 1. Generate Cache
     if not args.skip_gen:
         print("=== Step 1: Generating Cache ===")
-        cmd = f"{sys.executable} reproduction/generate_cache.py --dataset {args.dataset} --output {args.cache_file} --limit {args.limit} --model {args.model}"
+        cmd = f"{sys.executable} reproduction/generate_cache.py --dataset {args.dataset} --output {args.cache_file} --limit {args.limit} --model {args.model} --max_tokens {args.max_tokens}"
         run_command(cmd)
     else:
         print("=== Step 1: Skipping Cache Generation ===")
@@ -60,7 +61,8 @@ def main():
         "--max_code_suggestions", "5",
         "--fix_num_tests", str(args.tests),
         "--verbosity", "1",
-        "--model", args.model
+        "--model", args.model,
+        "--max_tokens", str(args.max_tokens)
     ] + ranking_arg
     
     cmd = " ".join(cmd_args)

@@ -306,8 +306,7 @@ def get_or_create_codex_response(client, prompt_val, best_of_val, temp_val, echo
     # https://beta.openai.com/docs/api-reference/completions/create
     # {prompt, max_tokens, temperature, top_p, n, stream, logprobs, echo, stop, presence_penalty, frequency_penalty, best_of, logit_bias, engine}
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    max_suggestions = max(config.MAX_NUM_CODEX_CODE_SUGGESTIONS,
-                          config.MAX_NUM_CODEX_TEST_SUGGESTIONS)
+    max_suggestions = num_sugg
     # the cache should not be sensitive to the number of suggestions
     # however, this would be too expensive when calling test per code (typically 50 code suggestion and 100 test suggestions per code, 5000 queries per example !!)
     k = (prompt_val, max_suggestions, temp_val, echo_val,
