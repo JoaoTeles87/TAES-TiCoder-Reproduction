@@ -16,10 +16,10 @@ def create_validation_tests(test_bodies, func_name):
 
 def read_json_or_jsonl_to_list(file_path):
     if file_path.endswith(".jsonl"):
-        with open(file_path, "r") as f:
-            return [json.loads(line) for line in f]
+        with open(file_path, "r", encoding="utf-8-sig") as f:
+            return [json.loads(line) for line in f if line.strip()]
     else:
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding="utf-8-sig") as f:
             return json.load(f)
 
 

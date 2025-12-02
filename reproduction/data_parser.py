@@ -99,10 +99,10 @@ class DataParser:
             list: Lista de dicionários contendo os dados do arquivo
         """
         if file_path.endswith(".jsonl"):
-            with open(file_path, "r") as f:
-                return [json.loads(line) for line in f]
+            with open(file_path, "r", encoding="utf-8-sig") as f:
+                return [json.loads(line) for line in f if line.strip()]
         else:
-            with open(file_path, "r") as f:
+            with open(file_path, "r", encoding="utf-8-sig") as f:
                 return json.load(f)
     
     @staticmethod

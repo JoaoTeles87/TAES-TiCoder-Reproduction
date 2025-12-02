@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--output_tag", default="experiment", help="Tag for output files")
     parser.add_argument("--model", default="gpt-3.5-turbo", help="Model to use (default: gpt-3.5-turbo)")
     parser.add_argument("--tests", type=int, default=5, help="Number of tests to generate per problem")
+    parser.add_argument("--ranking", default=None, help="Ranking strategy (e.g., code_t)")
     
     args = parser.parse_args()
     
@@ -47,18 +48,22 @@ def main():
     # We need to make sure we are using the cache we just generated.
     # And we want to simulate a user (query_oracle).
     
-    cmd = (
-        f"{sys.executable} src/main.py "
-        f"--data_file_path {args.dataset} "
-        f"--codex_cache_file_path {args.cache_file} "
-        f"--max_num_examples {args.limit} "
-        f"--query_oracle "
-        f"--output_tag {args.output_tag} "
-        f"--max_code_suggestions 5 "
-        f"--fix_num_tests {args.tests} "
-        f"--verbosity 1 "
-        f"--model {args.model} "
-    )
+    ranking_arg = ["--rank_code_option", args.ranking] if args.ranking else []
+
+    cmd_args = [
+        sys.executable, "src/main.py",
+        "--data_file_path", args.dataset,
+        "--codex_cache_file_path", args.cache_file,
+        "--max_num_examples", str(args.limit),
+        "--query_oracle",
+        "--output_tag", args.output_tag,
+        "--max_code_suggestions", "5",
+        "--fix_num_tests", str(args.tests),
+        "--verbosity", "1",
+        "--model", args.model
+    ] + ranking_arg
+    
+    cmd = " ".join(cmd_args)
     run_command(cmd)
     
     # 3. Analyze Results

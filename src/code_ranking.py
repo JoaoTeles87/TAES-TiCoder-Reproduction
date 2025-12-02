@@ -63,6 +63,9 @@ def rank_codes_by_dual_execution_agreement(codes, tests, func_name):
             return codes
             
         test_ids = tuple(sorted(test_ids))
+        test_ids = tuple(sorted(test_ids))
+        if test_ids not in code_clusters:
+            code_clusters[test_ids] = []
         code_clusters[test_ids].append(code)
 
     g_test_score = 1 / len(tests)
