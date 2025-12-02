@@ -178,10 +178,28 @@ We identified a mismatch in how the cache key was constructed:
 ### 11.3 Fix
 We modified `src/query_chat_model.py` to use the requested number of suggestions (`num_sugg`) in the cache key, ensuring it matches the generation phase. This guarantees reproducible evaluations using the pre-generated cache.
 
-## 10. Conclusion
-The project has successfully:
-1.  Replicated the core TiCoder-Output workflow with SLM-based test generation and ranking.
-2.  Achieved an **83.33% pass rate** in the final demo.
-3.  Provided tools to integrate with CodeT and generate caches efficiently.
-4.  Validated all components with real execution logs.
-5.  Delivered a robust, cross-platform automation script (`reproduction/run_full_experiment.py`).
+## 12. Challenges & Resolutions Summary
+
+During the reproduction, we encountered and resolved several key issues:
+
+| Challenge | Description | Resolution |
+| :--- | :--- | :--- |
+| **Cache Inconsistency** | `generate_cache.py` used `n=5` for keys, while `query_chat_model.py` defaulted to `max_suggestions=10`. This caused cache misses and non-reproducible runs. | **Fixed**: Updated `query_chat_model.py` to use the requested `num_sugg` for cache keys, ensuring alignment with generation. |
+| **Model Sensitivity** | Initial comparisons with CodeT (using `davinci002` data) showed large discrepancies vs our GPT-3.5 runs. | **Analysis**: Confirmed that TiCoder's relative gain is massive (2x) on weaker models, while on strong models (GPT-3.5), the baseline is already high (~70%), narrowing the gap. |
+| **Max Tokens Limit** | The default `max_tokens=150` is tight for some problems. | **Mitigation**: Documented as a limitation. The pipeline handles truncation gracefully (fails test), but future work should increase this limit for complex datasets. |
+
+## 13. Final Conclusion & Comparison
+
+We successfully reproduced the TiCoder workflow and compared it against CodeT. Below is the detailed breakdown of the final results on the controlled MBPP subset (20 examples, GPT-3.5-turbo).
+
+| Metric | Description | Result |
+| :--- | :--- | :--- |
+| **Baseline (Pass@1)** | Randomly selecting one of the generated candidates. | **70.33%** |
+| **TiCoder (Pass-Fail)** | *Simulated*: Filtering candidates that simply "pass" the generated tests (without Oracle output verification). | **~71.0%** |
+| **TiCoder (Output)** | **Our Main Implementation**: Using the Oracle (Canonical Solution) to verify the *exact output* of the generated test and pruning candidates that disagree. | **72.25%** |
+| **CodeT (Consensus)** | Selecting the candidate that belongs to the largest "consensus" cluster (most common output). | **75.83%** |
+
+**Key Takeaways:**
+1.  **TiCoder Output** (72.25%) improves over the baseline by leveraging the Oracle to prune incorrect solutions.
+2.  **CodeT** (75.83%) performs best in this high-quality model regime (GPT-3.5), as the "wisdom of the crowd" (consensus) is very strong when the model is capable.
+3.  **TiCoder's Value**: As seen in the cross-branch analysis, TiCoder's value explodes on harder tasks/weaker models (doubling accuracy), whereas on easy tasks/strong models, it provides a modest gain.
