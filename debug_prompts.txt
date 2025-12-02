@@ -1,0 +1,24 @@
+--- TEST CASE PROMPT ---
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    """
+    pass
+
+# check the correctness of has_close_elements
+assert 
+
+--- CODE SOLUTION PROMPT ---
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    """
+
+
+--- END ---
