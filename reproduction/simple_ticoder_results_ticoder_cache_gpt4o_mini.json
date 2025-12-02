@@ -1,0 +1,92 @@
+[
+    {
+        "task_id": 2,
+        "func_name": "similar_elements",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 3,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": true,
+        "error_message": null
+    },
+    {
+        "task_id": 3,
+        "func_name": "is_not_prime",
+        "num_code_suggestions": 4,
+        "num_test_suggestions": 0,
+        "num_pruned_codes": 4,
+        "passed_ground_truth": false,
+        "error_message": "name 'math' is not defined"
+    },
+    {
+        "task_id": 4,
+        "func_name": "heap_queue_largest",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 0,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": false,
+        "error_message": "name 'hq' is not defined"
+    },
+    {
+        "task_id": 6,
+        "func_name": "is_Power_Of_Two",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 6,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": false,
+        "error_message": "name 'is_Power_Of_Two' is not defined"
+    },
+    {
+        "task_id": 7,
+        "func_name": "find_char_long",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 0,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": false,
+        "error_message": "name 're' is not defined"
+    },
+    {
+        "task_id": 8,
+        "func_name": "square_nums",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 0,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": true,
+        "error_message": null
+    },
+    {
+        "task_id": 9,
+        "func_name": "find_Rotations",
+        "num_code_suggestions": 2,
+        "num_test_suggestions": 1,
+        "num_pruned_codes": 1,
+        "passed_ground_truth": true,
+        "error_message": null
+    },
+    {
+        "task_id": 11,
+        "func_name": "remove_Occ",
+        "num_code_suggestions": 7,
+        "num_test_suggestions": 2,
+        "num_pruned_codes": 7,
+        "passed_ground_truth": true,
+        "error_message": null
+    },
+    {
+        "task_id": 12,
+        "func_name": "sort_matrix",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 0,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": true,
+        "error_message": null
+    },
+    {
+        "task_id": 14,
+        "func_name": "find_Volume",
+        "num_code_suggestions": 8,
+        "num_test_suggestions": 7,
+        "num_pruned_codes": 8,
+        "passed_ground_truth": true,
+        "error_message": null
+    }
+]
