@@ -26,6 +26,7 @@ def main():
     parser.add_argument("--skip_gen", action="store_true", help="Skip cache generation")
     parser.add_argument("--output_tag", default="experiment", help="Tag for output files")
     parser.add_argument("--model", default="gpt-3.5-turbo", help="Model to use (default: gpt-3.5-turbo)")
+    parser.add_argument("--tests", type=int, default=5, help="Number of tests to generate per problem")
     
     args = parser.parse_args()
     
@@ -54,7 +55,7 @@ def main():
         f"--query_oracle "
         f"--output_tag {args.output_tag} "
         f"--max_code_suggestions 5 "
-        f"--fix_num_tests 5 "
+        f"--fix_num_tests {args.tests} "
         f"--verbosity 1 "
         f"--model {args.model} "
     )

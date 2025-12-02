@@ -81,7 +81,25 @@ python reproduction/run_full_experiment.py --limit 20 --output_tag larger_run --
 **Analysis:**
 With a larger sample, the metrics stabilize and show a realistic performance curve. The increase from Pass@1 (43%) to Pass@5 (55%) demonstrates the value of generating multiple candidates and using TiCoder's ranking/pruning to select the best one.
 
-## 7. Conclusion
+## 7. Comparison Benchmark Run (20 Examples, 8 Tests)
+
+As requested for comparison with another branch, we executed a run with `limit=20` and `fix_num_tests=8`.
+
+**Command:**
+```powershell
+python reproduction/run_full_experiment.py --limit 20 --tests 8 --output_tag comparison_friend --model gpt-3.5-turbo
+```
+
+**Results:**
+- **Pass@1**: 83.63%
+- **Pass@1 (Pruned)**: 85.0%
+- **Pass@5**: 90.90%
+- **Avg Correct Suggestions**: 2.18
+
+**Analysis:**
+Increasing the number of generated tests to 8 significantly improved the **Pruned Pass@1** (85.0%), demonstrating that more tests lead to better pruning of incorrect candidates. This configuration yields the best results so far.
+
+## 8. Conclusion
 
 The project has successfully:
 1.  Replicated the core TiCoder-Output workflow with SLM-based test generation and ranking.

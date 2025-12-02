@@ -4750,5 +4750,1325 @@
       "metadata": {}
     },
     "2025-12-01 20:11:34"
+  ],
+  "('def ascii_value_string(str1):\\n\\t\"\"\"Write a function to find the ascii value of total characters in a string.\"\"\"', 5, 0.8, False, 98, 'gpt-3.5-turbo', 5)": [
+    [
+      "def ascii_value_string(str1):\n\t\"\"\"Write a function to find the ascii value of total characters in a string.\"\"\"",
+      5,
+      0.8,
+      false,
+      98,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633908,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\n\tfor char in str1:\n\t\ttotal += ord(char)\n\treturn total"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\n\tfor char in str1:\n\t\ttotal += ord(char)\n\treturn total"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\n\tfor char in str1:\n\t\ttotal += ord(char)\n\treturn total"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total_ascii = 0\nfor char in str1:\n    total_ascii += ord(char)\nreturn total_ascii"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\nfor char in str1:\n    total += ord(char)\nreturn total"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:08"
+  ],
+  "('def check_Concat(str1,str2):\\n\\t\"\"\"Write a python function to check if the string is a concatenation of another string.\"\"\"', 5, 0.8, False, 263, 'gpt-3.5-turbo', 5)": [
+    [
+      "def check_Concat(str1,str2):\n\t\"\"\"Write a python function to check if the string is a concatenation of another string.\"\"\"",
+      5,
+      0.8,
+      false,
+      263,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633909,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def check_Concat(str1,str2):\n    if len(str1) % len(str2) != 0:\n        return False\n    return str1 == str2 * (len(str1)//len(str2))"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def check_Concat(str1, str2):\n    if len(str1) % len(str2) != 0:\n        return False\n    return str1 == str2 * (len(str1) // len(str2))"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def check_Concat(str1, str2):\n    if len(str1) % len(str2) != 0:\n        return False\n    return str1 == str2 * (len(str1) // len(str2))"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def check_Concat(str1, str2):\n    if len(str1) % len(str2) != 0:\n        return False\n    n = len(str1) // len(str2)\n    if str2 * n == str1:\n        return True\n    return False"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def check_Concat(str1, str2):\n    if len(str1) % len(str2) != 0:\n        return False\n    for i in range(0, len(str1), len(str2)):\n        if str1[i:i+len(str2)] != str2:\n            return False\n    return True"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:09"
+  ],
+  "('def filter_data(students,h,w):\\n\\t\"\"\"Write a function to filter the height and width of students which are stored in a dictionary.\"\"\"', 5, 0.8, False, 201, 'gpt-3.5-turbo', 5)": [
+    [
+      "def filter_data(students,h,w):\n\t\"\"\"Write a function to filter the height and width of students which are stored in a dictionary.\"\"\"",
+      5,
+      0.8,
+      false,
+      201,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633911,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn {key: value for key, value in students.items() if value[0] > h and value[1] > w}\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def filter_data(students, h, w):\n    filtered_students = {}\n    for student, (height, width) in students.items():\n        if height >= h and width >= w:\n            filtered_students[student] = (height, width)\n    return filtered_students"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "filtered_data = {k:v for k,v in students.items() if v['height'] >= h and v['weight'] >= w}\nreturn filtered_data"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def filter_data(students, h, w):\n    filtered_students = {k: v for k, v in students.items() if v['height'] > h and v['width'] > w}\n    return filtered_students"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def filter_data(students, h, w):\n    return {k: v for k, v in students.items() if v['height'] > h and v['width'] > w}"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:11"
+  ],
+  "('def merge_dictionaries(dict1,dict2):\\n\\t\"\"\"Write a function to merge two dictionaries into a single expression.\"\"\"', 5, 0.8, False, 50, 'gpt-3.5-turbo', 5)": [
+    [
+      "def merge_dictionaries(dict1,dict2):\n\t\"\"\"Write a function to merge two dictionaries into a single expression.\"\"\"",
+      5,
+      0.8,
+      false,
+      50,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633911,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return {**dict1, **dict2}"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return {**dict1, **dict2}"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return {**dict1, **dict2}"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return {**dict1, **dict2}"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return {**dict1, **dict2}"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:11"
+  ],
+  "('def decimal_To_Binary(N):\\n\\t\"\"\"Write a python function to convert a decimal number to binary number.\"\"\"', 5, 0.8, False, 58, 'gpt-3.5-turbo', 5)": [
+    [
+      "def decimal_To_Binary(N):\n\t\"\"\"Write a python function to convert a decimal number to binary number.\"\"\"",
+      5,
+      0.8,
+      false,
+      58,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633912,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn bin(N)[2:]\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def decimal_To_Binary(N):\n    return bin(N)[2:]"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn bin(N)[2:]\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def decimal_To_Binary(N):\n    return bin(N)[2:]"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn bin(N)[2:]\n```"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:12"
+  ],
+  "('def access_key(ditionary,key):\\n\\t\"\"\"Write a function to access dictionary key’s element by index.\"\"\"', 5, 0.8, False, 84, 'gpt-3.5-turbo', 5)": [
+    [
+      "def access_key(ditionary,key):\n\t\"\"\"Write a function to access dictionary key’s element by index.\"\"\"",
+      5,
+      0.8,
+      false,
+      84,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633913,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def access_key(dictionary, key):\n    if key in dictionary:\n        return dictionary[key]\n    else:\n        return None"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def access_key(dictionary, key):\n    if key in dictionary:\n        return dictionary[key]\n    else:\n        return None"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return ditionary[key]"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def access_key(dictionary, key):\n    if key in dictionary:\n        return dictionary[key]\n    else:\n        return None"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return ditionary[key]"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:13"
+  ],
+  "('def min_Operations(A,B):\\n\\t\"\"\"Write a python function to find the minimum operations required to make two numbers equal.\"\"\"', 5, 0.8, False, 184, 'gpt-3.5-turbo', 5)": [
+    [
+      "def min_Operations(A,B):\n\t\"\"\"Write a python function to find the minimum operations required to make two numbers equal.\"\"\"",
+      5,
+      0.8,
+      false,
+      184,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633914,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def min_Operations(A,B):\n    if A == B:\n        return 0\n    elif A < B:\n        return B - A\n    else:\n        return A - B"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def min_operations(A, B):\n    return abs(A - B)"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def min_Operations(A,B):\n    diff = abs(A - B)\n    count = 0\n    while diff != 0:\n        if diff % 2 == 0:\n            count += 1\n            diff = diff // 2\n        else:\n            count += 1\n            diff -= 1\n    return count"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn abs(A - B)\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def min_Operations(A,B):\n    operations = 0\n    while A != B:\n        if A < B:\n            A *= 2\n        else:\n            B *= 2\n        operations += 1\n    return operations"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:14"
+  ],
+  "('def remove_replica(test_tup):\\n\\t\"\"\"Write a function to remove tuple elements that occur more than once and replace the duplicates with some custom value.\"\"\"', 5, 0.8, False, 247, 'gpt-3.5-turbo', 5)": [
+    [
+      "def remove_replica(test_tup):\n\t\"\"\"Write a function to remove tuple elements that occur more than once and replace the duplicates with some custom value.\"\"\"",
+      5,
+      0.8,
+      false,
+      247,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633915,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def remove_replica(test_tup):\n    res = []\n    for val in test_tup:\n        if test_tup.count(val) == 1:\n            res.append(val)\n        else:\n            res.append('CustomValue')\n    return tuple(res)"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def remove_replica(test_tup):\n    unique_elements = []\n    for elem in test_tup:\n        if test_tup.count(elem) == 1:\n            unique_elements.append(elem)\n        else:\n            unique_elements.append('custom_value')\n    return tuple(unique_elements)"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn tuple(el if test_tup.count(el) == 1 else 'custom_value' for el in test_tup)\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def remove_replica(test_tup):\n    res = []\n    for i in test_tup:\n        if test_tup.count(i) == 1:\n            res.append(i)\n        else:\n            res.append(\"custom_value\")\n    return tuple(res)"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def remove_replica(test_tup):\n    unique_elements = []\n    duplicates_removed = []\n    for item in test_tup:\n        if item not in unique_elements:\n            unique_elements.append(item)\n        else:\n            duplicates_removed.append('custom_value')\n    return tuple(duplicates_removed)"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:15"
+  ],
+  "('def count_pairs(arr, n, k):\\n\\t\"\"\"Write a function to count all the distinct pairs having a difference of k in any array.\"\"\"', 5, 0.8, False, 252, 'gpt-3.5-turbo', 5)": [
+    [
+      "def count_pairs(arr, n, k):\n\t\"\"\"Write a function to count all the distinct pairs having a difference of k in any array.\"\"\"",
+      5,
+      0.8,
+      false,
+      252,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633916,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "count = 0\n\tfor i in range(n):\n\t\tfor j in range(i+1, n):\n\t\t\tif abs(arr[i] - arr[j]) == k:\n\t\t\t\tcount += 1\n\treturn count"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "pairs = set()\nfor i in range(n):\n    if arr[i] + k in arr:\n        pairs.add((arr[i], arr[i] + k))\nreturn len(pairs)"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "count = 0\n    arr_set = set(arr)\n    for num in arr_set:\n        if num + k in arr_set:\n            count += 1\n    return count"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "pairs = set()\nfor i in range(n):\n    if arr[i] - k in arr and (arr[i], arr[i]-k) not in pairs:\n        pairs.add((arr[i], arr[i]-k))\n    if arr[i] + k in arr and (arr[i], arr[i]+k) not in pairs:\n        pairs.add((arr[i], arr[i]+k))\nreturn len(pairs)"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "pairs = set()\nfor i in range(n):\n    if arr[i] + k in arr:\n        pairs.add((min(arr[i], arr[i] + k), max(arr[i], arr[i] + k)))\nreturn len(pairs)"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:16"
+  ],
+  "('def maximize_elements(test_tup1, test_tup2):\\n\\t\"\"\"Write a function to maximize the given two tuples.\"\"\"', 5, 0.8, False, 175, 'gpt-3.5-turbo', 5)": [
+    [
+      "def maximize_elements(test_tup1, test_tup2):\n\t\"\"\"Write a function to maximize the given two tuples.\"\"\"",
+      5,
+      0.8,
+      false,
+      175,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633918,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn tuple(max(x, y) for x, y in zip(test_tup1, test_tup2))\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn tuple(max(x, y) for x, y in zip(test_tup1, test_tup2))\n```"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nresult_tup = tuple(max(a, b) for a, b in zip(test_tup1, test_tup2))\nreturn result_tup\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "maximized_tup = tuple(max(x, y) for x, y in zip(test_tup1, test_tup2)\nreturn maximized_tup"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def maximize_elements(test_tup1, test_tup2):\n    return tuple(max(t1, t2) for t1, t2 in zip(test_tup1, test_tup2) if t1 is not None and t2 is not None)"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:18"
+  ],
+  "('def check_literals(text, patterns):\\n\\t\"\"\"Write a function to search some literals strings in a string by using regex.\"\"\"', 5, 0.8, False, 177, 'gpt-3.5-turbo', 5)": [
+    [
+      "def check_literals(text, patterns):\n\t\"\"\"Write a function to search some literals strings in a string by using regex.\"\"\"",
+      5,
+      0.8,
+      false,
+      177,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633919,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "import re\n\ndef check_literals(text, patterns):\n    found = []\n    for pattern in patterns:\n        if re.search(pattern, text):\n            found.append(pattern)\n    return found"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "import re\n\ndef check_literals(text, patterns):\n    for pattern in patterns:\n        if re.search(re.escape(pattern), text):\n            return True\n    return False"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport re\n\ndef check_literals(text, patterns):\n    for pattern in patterns:\n        if re.search(pattern, text):\n            return True\n    return False\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport re\ndef check_literals(text, patterns):\n    for pattern in patterns:\n        if re.search(pattern, text):\n            return True\n    return False\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport re\n\ndef check_literals(text, patterns):\n    for pattern in patterns:\n        if re.search(pattern, text):\n            return True\n    return False\n```"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:19"
+  ],
+  "('def eulerian_num(n, m):\\n\\t\"\"\"Write a function to find eulerian number a(n, m).\"\"\"', 5, 0.8, False, 323, 'gpt-3.5-turbo', 5)": [
+    [
+      "def eulerian_num(n, m):\n\t\"\"\"Write a function to find eulerian number a(n, m).\"\"\"",
+      5,
+      0.8,
+      false,
+      323,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633920,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nif m == 0:\n    return 1\nelif n == 0:\n    return 0\nelse:\n    return (m + 1) * eulerian_num(n - 1, m) + (n - m) * eulerian_num(n - 1, m - 1)\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nif m == 0:\n    return 1\nif n == 0 and m > 0:\n    return 0\nreturn (m + 1) * eulerian_num(n - 1, m) + (n - m) * eulerian_num(n - 1, m - 1)\n```"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nif m == 0:\n    return 1\nif n == 0:\n    return 0\nreturn (n - m) * eulerian_num(n - 1, m - 1) + (m + 1) * eulerian_num(n - 1, m)\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nif n == 0:\n    return 1\nif m == 0:\n    return 0\nreturn (m + 1) * eulerian_num(n - 1, m) - m * eulerian_num(n - 1, m - 1)\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nif n == 0:\n    return 1\nelif m == 0:\n    return 0\nelse:\n    return (m + 1) * eulerian_num(n - 1, m) - m * eulerian_num(n - 1, m - 1)\n```"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:20"
+  ],
+  "('def lobb_num(n, m):\\n\\t\"\"\"Write a function to find ln, m lobb number.\"\"\"', 5, 0.8, False, 348, 'gpt-3.5-turbo', 5)": [
+    [
+      "def lobb_num(n, m):\n\t\"\"\"Write a function to find ln, m lobb number.\"\"\"",
+      5,
+      0.8,
+      false,
+      348,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633922,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nif n == 0:\n\treturn 1\nelif n == 1:\n\treturn m + 1\nelse:\n\treturn ((2 * n + 1) * m * lobb_num(n-1, m) - (n + m) * lobb_num(n-2, m)) // (n + 1)\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport math\n\ndef lobb_num(n, m):\n    if n == 0:\n        return 1\n    if n == 1 and m == 0:\n        return 1\n    if n == 1 and m == 1:\n        return 1\n    return ((2*n + 1) / (n + 1)) * lobb_num(n-1, m) - (n / (n + 1)) * lobb_num(n-2, m)\n```"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfrom math import factorial\n\ndef lobb_num(n, m):\n    return factorial(n + m) // (factorial(n) * factorial(m)) * ((-1) ** m) * (2 * n + 1)\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfrom math import factorial\n\ndef lobb_num(n, m):\n    if n == 0:\n        return 1\n    if n == 1:\n        return m\n    return ((2*n-1)*m*lobb_num(n-1, m) - (n-1)*lobb_num(n-2, m)) // n\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfrom math import factorial\n\ndef lobb_num(n, m):\n    return factorial(n + m) // (factorial(n + m + 1) * factorial(n - m))\n```"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:22"
+  ],
+  "('def pair_wise(l1):\\n\\t\"\"\"Write a function to iterate over all pairs of consecutive items in a given list.\"\"\"', 5, 0.8, False, 142, 'gpt-3.5-turbo', 5)": [
+    [
+      "def pair_wise(l1):\n\t\"\"\"Write a function to iterate over all pairs of consecutive items in a given list.\"\"\"",
+      5,
+      0.8,
+      false,
+      142,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633923,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "for i in range(len(l1) - 1):\n    print((l1[i], l1[i + 1]))"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "for i in range(len(l1) - 1):\n    print((l1[i], l1[i+1]))"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfor i in range(len(l1) - 1):\n    print(l1[i], l1[i + 1])\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfor i in range(len(l1)-1):\n    print((l1[i], l1[i+1]))\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfor i in range(len(l1) - 1):\n    pair = (l1[i], l1[i + 1])\n    print(pair)\n```"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:23"
+  ],
+  "('def concatenate_strings(test_tup1, test_tup2):\\n\\t\"\"\"Write a function to perform the concatenation of two string tuples.\"\"\"', 5, 0.8, False, 155, 'gpt-3.5-turbo', 5)": [
+    [
+      "def concatenate_strings(test_tup1, test_tup2):\n\t\"\"\"Write a function to perform the concatenation of two string tuples.\"\"\"",
+      5,
+      0.8,
+      false,
+      155,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633924,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn tuple(map(lambda x, y: x + y, test_tup1, test_tup2))\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nreturn tuple(map(lambda x, y: x + y, test_tup1, test_tup2))\n```"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def concatenate_strings(test_tup1, test_tup2):\n    return (test_tup1[0] + test_tup2[0], test_tup1[1] + test_tup2[1])"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "return tuple(map(lambda x, y: x+y, test_tup1, test_tup2))"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def concatenate_strings(test_tup1, test_tup2):\n    return tuple(map(lambda x, y: x + y, test_tup1, test_tup2))"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:24"
+  ],
+  "('def count_range_in_list(li, min, max):\\n\\t\"\"\"Write a function to count the number of elements in a list which are within a specific range.\"\"\"', 5, 0.8, False, 153, 'gpt-3.5-turbo', 5)": [
+    [
+      "def count_range_in_list(li, min, max):\n\t\"\"\"Write a function to count the number of elements in a list which are within a specific range.\"\"\"",
+      5,
+      0.8,
+      false,
+      153,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633925,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "count = 0\n\tfor num in li:\n\t\tif min <= num <= max:\n\t\t\tcount += 1\n\treturn count"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "count = 0\nfor num in li:\n    if min <= num <= max:\n        count += 1\nreturn count"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\ncount = 0\nfor num in li:\n    if min <= num <= max:\n        count += 1\nreturn count\n```"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def count_range_in_list(li, min_val, max_val):\n    count = 0\n    for num in li:\n        if min_val <= num <= max_val:\n            count += 1\n    return count"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "count = 0\n\tfor num in li:\n\t\tif min <= num <= max:\n\t\t\tcount += 1\n\treturn count"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:25"
+  ],
+  "('def grouping_dictionary(l):\\n\\t\"\"\"Write a function to group a sequence of key-value pairs into a dictionary of lists using collections module.\"\"\"', 5, 0.8, False, 204, 'gpt-3.5-turbo', 5)": [
+    [
+      "def grouping_dictionary(l):\n\t\"\"\"Write a function to group a sequence of key-value pairs into a dictionary of lists using collections module.\"\"\"",
+      5,
+      0.8,
+      false,
+      204,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633926,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfrom collections import defaultdict\n\ndef grouping_dictionary(l):\n    grouped_dict = defaultdict(list)\n    for key, value in l:\n        grouped_dict[key].append(value)\n    return dict(grouped_dict)\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfrom collections import defaultdict\n\ndef grouping_dictionary(l):\n    result = defaultdict(list)\n    for key, value in l:\n        result[key].append(value)\n    return dict(result)\n```"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "from collections import defaultdict\n\ndef grouping_dictionary(l):\n    grouped_dict = defaultdict(list)\n    for key, value in l:\n        grouped_dict[key].append(value)\n    return dict(grouped_dict)"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nfrom collections import defaultdict\n\ndef grouping_dictionary(l):\n    d = defaultdict(list)\n    for key, value in l:\n        d[key].append(value)\n    return dict(d)\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "from collections import defaultdict\n\ndef grouping_dictionary(l):\n    grouped_dict = defaultdict(list)\n    for key, value in l:\n        grouped_dict[key].append(value)\n    return dict(grouped_dict)"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:26"
+  ],
+  "('def Sort(sub_li):\\n\\t\"\"\"Write a python function to sort a list according to the second element in sublist.\"\"\"', 5, 0.8, False, 72, 'gpt-3.5-turbo', 5)": [
+    [
+      "def Sort(sub_li):\n\t\"\"\"Write a python function to sort a list according to the second element in sublist.\"\"\"",
+      5,
+      0.8,
+      false,
+      72,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633927,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "sub_li.sort(key=lambda x: x[1])"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "sub_li.sort(key=lambda x: x[1])\nreturn sub_li"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "sub_li.sort(key=lambda x: x[1])\nreturn sub_li"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nsub_li.sort(key=lambda x: x[1])\nreturn sub_li\n```"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "sub_li.sort(key=lambda x: x[1])\nreturn sub_li"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:27"
+  ],
+  "('def average_Odd(n) :\\n\\t\"\"\"Write a python function to find the average of odd numbers till a given odd number.\"\"\"', 5, 0.8, False, 211, 'gpt-3.5-turbo', 5)": [
+    [
+      "def average_Odd(n) :\n\t\"\"\"Write a python function to find the average of odd numbers till a given odd number.\"\"\"",
+      5,
+      0.8,
+      false,
+      211,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633928,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "odd_numbers = [i for i in range(1, n+1) if i % 2 != 0]\naverage = sum(odd_numbers) / len(odd_numbers)\nreturn average"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "sum_odd = 0\ncount = 0\n\nfor i in range(1, n+1, 2):\n    sum_odd += i\n    count += 1\n\naverage = sum_odd / count\n\nreturn average"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\ncount = 0\nfor i in range(1, n+1, 2):\n    total += i\n    count += 1\nreturn total / count"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\ncount = 0\nfor i in range(1, n+1, 2):\n    total += i\n    count += 1\naverage = total / count\nreturn average"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "total = 0\ncount = 0\nfor i in range(1, n+1, 2):\n    total += i\n    count += 1\naverage = total / count\nreturn average"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:28"
+  ],
+  "('def find_adverb_position(text):\\n\\t\"\"\"Write a function to find all adverbs and their positions in a given sentence.\"\"\"', 5, 0.8, False, 322, 'gpt-3.5-turbo', 5)": [
+    [
+      "def find_adverb_position(text):\n\t\"\"\"Write a function to find all adverbs and their positions in a given sentence.\"\"\"",
+      5,
+      0.8,
+      false,
+      322,
+      "gpt-3.5-turbo",
+      5
+    ],
+    {
+      "id": null,
+      "object": "chat.completion",
+      "created": 1764633929,
+      "model": "gpt-3.5-turbo",
+      "choices": [
+        {
+          "index": 0,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport spacy\n\ndef find_adverb_position(text):\n    nlp = spacy.load(\"en_core_web_sm\")\n    doc = nlp(text)\n    adverbs = [(token.text, token.idx) for token in doc if token.pos_ == \"ADV\"]\n    return adverbs\n```"
+          }
+        },
+        {
+          "index": 1,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport spacy\n\ndef find_adverb_position(text):\n\tnlp = spacy.load(\"en_core_web_sm\")\n\tdoc = nlp(text)\n\tadverbs = [(token.text, token.idx) for token in doc if token.pos_ == \"ADV\"]\n\treturn adverbs\n```"
+          }
+        },
+        {
+          "index": 2,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def find_adverb_position(text):\n    import re\n    adverbs = re.findall(r'\\b\\w+ly\\b', text)\n    positions = [(m.start(0), m.end(0)) for m in re.finditer(r'\\b\\w+ly\\b', text)]\n    return list(zip(adverbs, positions))"
+          }
+        },
+        {
+          "index": 3,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "def find_adverb_position(text):\n    import re\n    adverbs = re.findall(r'\\b\\w+ly\\b', text)\n    positions = [(m.group(0), m.start(), m.end()) for m in re.finditer(r'\\b\\w+ly\\b', text)]\n    return positions"
+          }
+        },
+        {
+          "index": 4,
+          "finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "```python\nimport nltk\nfrom nltk.tokenize import word_tokenize\nfrom nltk import pos_tag\n\ndef find_adverb_position(text):\n    tokens = word_tokenize(text)\n    tagged_words = pos_tag(tokens)\n    adverbs = [(word, pos) for word, pos in tagged_words if pos.startswith('RB')]\n    return adverbs\n```"
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "metadata": {}
+    },
+    "2025-12-01 21:05:29"
   ]
 }
