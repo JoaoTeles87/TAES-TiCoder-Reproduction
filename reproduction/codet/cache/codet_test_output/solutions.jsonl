@@ -1,0 +1,1 @@
+{"prompt": "Write a function to find the shared elements from the given two lists.", "samples": ["def solution():\n    return 'solution_0'", "def solution():\n    return 'solution_1'", "def solution():\n    return 'solution_2'"]}
