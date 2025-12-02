@@ -51,3 +51,8 @@ class GPT5Nano(Model):
 		# repassar demais kwargs ao comportamento genérico
 		return super().create_completion(**kwargs)
 
+
+class GPT4oMini(Model):
+	"""Força uso do modelo gpt-4o-mini e instancia o cliente via super."""
+	def __init__(self):
+		super().__init__(model_name="gpt-4o-mini")

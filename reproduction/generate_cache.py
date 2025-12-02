@@ -11,7 +11,7 @@ import config as ticode_config
 import query_chat_model
 
 # Configuration
-TOY_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../datasets/mbpp/toy.jsonl"))
+TOY_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../datasets/mbpp/sanitized-mbpp.json"))
 TICODER_CACHE_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "ticoder_cache.json"))
 CODET_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "codet_output"))
 MODEL_NAME = "gpt-5-nano"
@@ -30,7 +30,7 @@ def generate_cache():
     
     # Load data
     import dataset_io as dio
-    data_list = dio.read_json_or_jsonl_to_list(TOY_DATA_PATH)
+    data_list = dio.read_json_or_jsonl_to_list(TOY_DATA_PATH)[:10]
     
     # Prepare caches
     ticoder_cache = {}
@@ -41,7 +41,13 @@ def generate_cache():
     codet_solutions = []
     codet_tests = []
     
-    model = models.GPT5Nano()
+    # Initialize model
+    if MODEL_NAME == "gpt-5-nano":
+        model = models.GPT5Nano()
+    elif MODEL_NAME == "gpt-4o-mini":
+        model = models.GPT4oMini()
+    else:
+        model = models.Model(MODEL_NAME)
     
     for i, data in enumerate(data_list):
         # Parse data using TiCoder's parser
@@ -222,6 +228,23 @@ def generate_cache():
             
     return os.path.join(CODET_OUTPUT_DIR, 'solutions.jsonl'), os.path.join(CODET_OUTPUT_DIR, 'tests.jsonl')
 
+
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate cache for TiCoder/CodeT")
+    parser.add_argument("--model", type=str, default="gpt-5-nano", choices=["gpt-5-nano", "gpt-4o-mini"], help="Model to use")
+    parser.add_argument("--cache_file", type=str, default=TICODER_CACHE_FILE, help="Path to TiCoder cache file")
+    parser.add_argument("--output_dir", type=str, default=CODET_OUTPUT_DIR, help="Path to CodeT output directory")
+    
+    args = parser.parse_args()
+    
+    MODEL_NAME = args.model
+    TICODER_CACHE_FILE = os.path.abspath(args.cache_file)
+    CODET_OUTPUT_DIR = os.path.abspath(args.output_dir)
+    
+    # Ensure output directory exists
+    os.makedirs(CODET_OUTPUT_DIR, exist_ok=True)
+    
     generate_cache()
+
     print("\n=== Cache Generation Complete ===")

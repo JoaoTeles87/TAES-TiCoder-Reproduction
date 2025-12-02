@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../t
 from data_parser import DataParser
 
 # Configuration
-TOY_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../datasets/mbpp/toy.jsonl"))
+TOY_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../datasets/mbpp/sanitized-mbpp.json"))
 CODET_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "codet_output"))
 
 def run_codet_execution(sol_file=None, test_file=None):
@@ -25,11 +25,10 @@ def run_codet_execution(sol_file=None, test_file=None):
     # Prepare MBPP JSONL for CodeT
     mbpp_jsonl_file = os.path.join(CODET_OUTPUT_DIR, "mbpp.jsonl")
     with open(TOY_DATA_PATH, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
+        data = json.load(f)[:10]
     
     with open(mbpp_jsonl_file, 'w', encoding='utf-8') as f:
-        for line in lines:
-            entry = json.loads(line)
+        for entry in data:
             if 'prompt' not in entry and 'text' in entry:
                 entry['prompt'] = entry['text']
             if 'entry_point' not in entry:
@@ -73,6 +72,16 @@ def run_codet_execution(sol_file=None, test_file=None):
         print(e.stdout)
         print(e.stderr)
 
+
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Run CodeT execution")
+    parser.add_argument("--input_dir", type=str, default=CODET_OUTPUT_DIR, help="Path to CodeT input directory (containing solutions.jsonl and tests.jsonl)")
+    
+    args = parser.parse_args()
+    
+    CODET_OUTPUT_DIR = os.path.abspath(args.input_dir)
+    
     run_codet_execution()
+
     print("\n=== CodeT Execution Complete ===")

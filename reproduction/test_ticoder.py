@@ -12,7 +12,7 @@ import query_chat_model
 import main as ticode_main
 
 # Configuration
-TOY_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../datasets/mbpp/toy.jsonl"))
+TOY_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../datasets/mbpp/sanitized-mbpp.json"))
 TICODER_CACHE_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "ticoder_cache.json"))
 TICODER_OUTPUT_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "ticoder_output.txt"))
 MODEL_NAME = "gpt-5-nano"
@@ -141,7 +141,7 @@ def run_ticoder_experiment():
     
     # Load data
     import dataset_io as dio
-    data_list = dio.read_json_or_jsonl_to_list(TOY_DATA_PATH)
+    data_list = dio.read_json_or_jsonl_to_list(TOY_DATA_PATH)[:10]
     ticode_main.data_list = data_list
     
     # Patch execution for Windows (disable timeout)
@@ -190,6 +190,21 @@ def run_ticoder_experiment():
         else:
             print("Selected Code Correct: False (No codes left)")
 
+
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Run TiCoder experiment")
+    parser.add_argument("--cache_file", type=str, default=TICODER_CACHE_FILE, help="Path to TiCoder cache file")
+    
+    args = parser.parse_args()
+    
+    TICODER_CACHE_FILE = os.path.abspath(args.cache_file)
+    
+    # Update output file name based on cache file to avoid overwriting
+    base_name = os.path.basename(TICODER_CACHE_FILE)
+    name_without_ext = os.path.splitext(base_name)[0]
+    TICODER_OUTPUT_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), f"{name_without_ext}_results.txt"))
+    
     run_ticoder_experiment()
+
     print("\n=== TiCoder Execution Complete ===")
