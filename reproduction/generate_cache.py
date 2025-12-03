@@ -12,7 +12,7 @@ load_dotenv()
 
 # Add current directory and src directory to path
 current_dir = os.path.dirname(os.path.abspath(__file__))
-src_dir = os.path.join(os.path.dirname(current_dir), 'src')
+src_dir = os.path.join(os.path.dirname(current_dir), 'ticoder', 'src')
 sys.path.insert(0, current_dir)
 sys.path.insert(0, src_dir)
 

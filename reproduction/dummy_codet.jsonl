@@ -1,2 +1,0 @@
-{"prompt": "def add(a, b):", "samples": ["return a + b", "return a - b"]}
-{"prompt": "def sub(a, b):", "samples": ["return a - b", "return a + b"]}

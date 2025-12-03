@@ -52,7 +52,7 @@ def main():
     ranking_arg = ["--rank_code_option", args.ranking] if args.ranking else []
 
     cmd_args = [
-        sys.executable, "src/main.py",
+        sys.executable, "ticoder/src/main.py",
         "--data_file_path", args.dataset,
         "--codex_cache_file_path", args.cache_file,
         "--max_num_examples", str(args.limit),
@@ -80,7 +80,7 @@ def main():
         # But for now let's assume standard naming
         sys.exit(1)
         
-    cmd = f"{sys.executable} src/compute_metrics.py {results_file}"
+    cmd = f"{sys.executable} ticoder/src/compute_metrics.py {results_file}"
     run_command(cmd)
     
     print("=== Experiment Completed Successfully ===")
