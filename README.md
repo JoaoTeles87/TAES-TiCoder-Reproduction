@@ -1,70 +1,55 @@
-# TiCoder-SLM: Otimização de Geração de Código Interativa com SLMs e In-Context Learning
+# PROJETO: TiCoder-SLM (Reprodução de Paper)
 
-Este repositório contém a implementação do projeto **TiCoder-SLM**, um estudo empírico que visa replicar e otimizar o fluxo de trabalho de geração de código guiada por testes (Test-Driven Interactive Code Generation). O projeto foca na eficiência computacional e na redução de latência ao substituir Grandes Modelos de Linguagem (LLMs) por Pequenos Modelos de Linguagem (SLMs) aprimorados com técnicas de In-Context Learning.
+## Objetivo
+Replicar a lógica do paper "LLM-Based Test-Driven Interactive Code Generation", mas substituindo o Test Manager (gerador de testes) por um SLM (Small Language Model) com In-Context Learning.
 
----
+## Restrições (Core Team - 2 Dias)
+1. Sem Interface Gráfica (CLI apenas).
+# PROJETO: TiCoder-SLM (Reprodução de Paper)
 
-## 📄 Contexto e Motivação
+## Objetivo
+Replicar a lógica do paper "LLM-Based Test-Driven Interactive Code Generation", mas substituindo o Test Manager (gerador de testes) por um SLM (Small Language Model) com In-Context Learning.
 
-O artigo original, **"LLM-Based Test-Driven Interactive Code Generation: User Study and Empirical Evaluation"**[^1], utiliza modelos massivos (GPT-3.5/4, Davinci) tanto para gerar código quanto para gerar testes e poderia ter explorado mais o uso de modelos menores. Pois foi dado prioridade a latência e custo. Além disso, o feedback apontou que o uso de In-Context Learning (ICL) foi limitado e SLMs não foram explorados como fatores de benefício para o workflow.
+## Restrições (Core Team - 2 Dias)
+1. Sem Interface Gráfica (CLI apenas).
+2. Dataset: HumanEval (usar apenas 20 problemas para teste rápido).
+3. Stack: Python 3.10+, API Groq (ou Mock para dev), JSON para armazenamento.
 
-Além disso, no artigo original, eles usam o mesmo modelo LLM (ex: Davinci) para gerar esses testes e depois um algoritmo matemático para ranquear qual teste divide melhor os candidatos ($S_{discr}$)[^2].
+## Arquitetura Simplificada
+1. **Generation (Cache):** Script gera 5 variantes de código para cada problema e salva em JSON.
+2. **Oracle (Simulador):** Script executa um input na "Canonical Solution" do dataset para saber a resposta correta.
+3. **TiCoder Loop (Variante TICODER-OUTPUT):**
+   - SLM analisa os 5 códigos.
+   - SLM gera um input de teste (Few-Shot Prompting).
+   - Oracle roda input -> Define Gabarito ($o'$).
+   - Script elimina códigos que divergem do Gabarito ($c(i) \neq o'$).
+   - **Nota:** Implementamos a variante *Assistant 3* do paper, onde o oráculo fornece o valor de saída exato, permitindo poda mais agressiva do que apenas PASS/FAIL.
 
-### Contribuição do Projeto
+## Reprodução e Comparação: TiCoder vs CodeT
 
-A proposta deste trabalho é substituir essa geração e ranqueamento "brutos" por um **SLM instruído via Prompt Engineering (In-Context Learning)**. O SLM deve olhar os códigos e intuir qual teste desambigua, sem precisar gerar 50 testes e calcular estatísticas como no paper.
+Para validar a eficácia do TiCoder e compará-lo com o CodeT, realizamos experimentos controlados utilizando um subconjunto fixo do dataset MBPP.
 
----
+### Metodologia
 
-## 🎯 Objetivos Gerais
+### Metodologia
 
-1. **Replicação do Workflow TiCoder**: Implementar a lógica de geração de testes discriminativos e poda de código (pruning), simulando a interação do usuário através de um oráculo automatizado baseado na solução de referência[^3].
+1.  **Dataset Controlado**: Selecionamos aleatoriamente 20 problemas do MBPP (`reproduction/subset_20.jsonl`) para garantir que ambos os métodos fossem avaliados nos mesmos desafios.
+2.  **Cache Compartilhado**: Geramos 5 candidatos de código para cada problema usando o modelo `gpt-3.5-turbo`. Este cache foi usado tanto pelo TiCoder quanto pelo CodeT para eliminar a variabilidade da geração de código.
+3.  **Parâmetros**:
+    - `limit=20`: Número de problemas avaliados.
+    - `tests=8`: Número de testes gerados pelo TiCoder para validar cada candidato.
+    - `max_tokens=150`: Limite de tokens para geração de código e testes.
 
-2. **Integração de SLMs (Small Language Models)**: Demonstrar a viabilidade técnica de utilizar modelos leves (como Llama-3-8B ou Phi-3.5) para atuar como o "Gerenciador de Testes"[^4], reduzindo a dependência de APIs proprietárias de alto custo.
+### Resultados
 
-3. **Aplicação de In-Context Learning (ICL)**: Implementar prompts do tipo Few-Shot Chain-of-Thought para capacitar o SLM a identificar divergências lógicas entre candidatos de código e gerar inputs de teste precisos com poucas iterações.
+| Métrica | Descrição | Resultado |
+| :--- | :--- | :--- |
+| **Baseline (Pass@1)** | Probabilidade esperada de selecionar um candidato correto aleatoriamente do conjunto gerado (`c/n`). | **70.33%** |
+| **TiCoder (Pass-Fail)** | **Oráculo Booleano**: O Oráculo (Referência) valida se o par entrada/saída do teste gerado é consistente com o gabarito (Pass/Fail), sem fornecer explicitamente o valor correto ao gerador se falhar. | **~71.0%** |
+| **TiCoder (Output)** | **Oráculo Explícito**: O Oráculo fornece a saída exata esperada para uma dada entrada. O sistema poda qualquer candidato que não corresponda estritamente a este valor de saída. | **72.25%** |
+| **CodeT (Consenso)** | Seleciona o candidato que pertence ao maior cluster de "consenso" (saída mais comum). | **75.83%** |
 
-4. **Validação em Cenário Simulado**: Avaliar a acurácia da seleção de código comparando o método proposto com um baseline aleatório, utilizando datasets de programação padrão (ex: HumanEval/MBPP).
+### Hipóteses finais
 
----
-
-## 🛠️ Arquitetura da Solução
-
-O projeto adapta a arquitetura original do TiCoder[^5] para um ambiente de execução automatizada, dividida em três componentes principais:
-
-### 1. Code Generator (Camada de Cache)
-
-Responsável por fornecer o espaço de busca inicial.
-
-- Gera $N$ candidatos de código ($C_1...C_5$) para um problema dado a partir de um prompt em linguagem natural[^6].
-- Utiliza um LLM robusto (gerado previamente e cacheado) para isolar a variável de "geração" e focar o estudo na "validação".
-
-### 2. Test Manager (SLM + In-Context Learning)
-
-O núcleo inteligente do sistema que substitui o ranqueamento estatístico original.
-
-- **Motor**: Um modelo SLM (Small Language Model) otimizado.
-- **Lógica**: Recebe os códigos candidatos e, através de um prompt few-shot, raciocina sobre as diferenças semânticas entre eles.
-- **Saída**: Gera um único teste discriminativo (Input) projetado especificamente para expor falhas nos candidatos incorretos, sem a necessidade de gerar múltiplos testes descartáveis[^7].
-
-### 3. Simulated User (Oráculo Automatizado)
-
-Um script que substitui a interação humana manual para permitir validação em escala[^8].
-
-- Executa o teste gerado pelo SLM na **Solução de Referência** ($b_p$) (Ground Truth do dataset).
-- Define o output da referência como a "resposta correta".
-- Executa o mesmo teste nos códigos candidatos e realiza a poda (pruning) automática de qualquer candidato que não retorne o mesmo resultado da referência[^9].
-
----
-
-## 📚 Referências
-
-[^1]: Artigo original sobre geração de código interativa baseada em testes com LLMs
-[^2]: Métrica de discriminação de testes
-[^3]: Metodologia de validação automatizada
-[^4]: Componente de gerenciamento de testes
-[^5]: Arquitetura base do TiCoder
-[^6]: Geração de candidatos de código
-[^7]: Estratégia de teste discriminativo
-[^8]: Simulação de usuário
-[^9]: Processo de poda de candidatos
+- **Amostragem pequena**: 20 exemplos são insuficientes para convergir
+- **TiCoder cru**: mplementação específica dos autores era muito mais complexa do que o framework proposto, gerando resultados melhores 
