@@ -1,10 +1,4 @@
-# PROJETO: TiCoder-SLM (Reprodução de Paper)
 
-## Objetivo
-Replicar a lógica do paper "LLM-Based Test-Driven Interactive Code Generation", mas substituindo o Test Manager (gerador de testes) por um SLM (Small Language Model) com In-Context Learning.
-
-## Restrições (Core Team - 2 Dias)
-1. Sem Interface Gráfica (CLI apenas).
 # PROJETO: TiCoder-SLM (Reprodução de Paper)
 
 ## Objetivo
@@ -31,7 +25,7 @@ Para validar a eficácia do TiCoder e compará-lo com o CodeT, realizamos experi
 
 ### Metodologia
 
-### Metodologia
+
 
 1.  **Dataset Controlado**: Selecionamos aleatoriamente 20 problemas do MBPP (`reproduction/subset_20.jsonl`) para garantir que ambos os métodos fossem avaliados nos mesmos desafios.
 2.  **Cache Compartilhado**: Geramos 5 candidatos de código para cada problema usando o modelo `gpt-3.5-turbo`. Este cache foi usado tanto pelo TiCoder quanto pelo CodeT para eliminar a variabilidade da geração de código.
