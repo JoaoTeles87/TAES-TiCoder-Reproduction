@@ -195,8 +195,8 @@ We successfully reproduced the TiCoder workflow and compared it against CodeT. B
 | Metric | Description | Result |
 | :--- | :--- | :--- |
 | **Baseline (Pass@1)** | Randomly selecting one of the generated candidates. | **70.33%** |
-| **TiCoder (Pass-Fail)** | *Simulated*: Filtering candidates that simply "pass" the generated tests (without Oracle output verification). | **~71.0%** |
-| **TiCoder (Output)** | **Our Main Implementation**: Using the Oracle (Canonical Solution) to verify the *exact output* of the generated test and pruning candidates that disagree. | **72.25%** |
+| **TiCoder (Pass-Fail)** | **Boolean Oracle**: The Oracle (Reference) validates if the generated test input/output pair is consistent with the ground truth (Pass/Fail), without explicitly providing the correct value to the generator if it fails. | **~71.0%** |
+| **TiCoder (Output)** | **Explicit Oracle**: The Oracle provides the exact expected output for a given input. The system prunes any candidate that does not strictly match this output value. | **72.25%** |
 | **CodeT (Consensus)** | Selecting the candidate that belongs to the largest "consensus" cluster (most common output). | **75.83%** |
 
 **Key Takeaways:**
